@@ -7,6 +7,7 @@ import vueRouter from 'vue-router'
 import vueResource from 'vue-resource'
 import Customers from './components/Customers'
 import About from './components/About'
+import Add from './components/Add'
 
 
 Vue.use(vueResource);
@@ -18,6 +19,7 @@ const router = new vueRouter({
     routes: [
         {path: '/', component: Customers},
         {path: '/about', component: About},
+        {path: '/add', component: Add},
     ]
 })
 /* eslint-disable no-new */
@@ -40,6 +42,9 @@ new Vue({
           <ul class="nav navbar-nav">
             <li><router-link to="/">Home</router-link></li>
             <li><router-link to="/about">About</router-link></li>
+          </ul>
+           <ul class="nav navbar-nav navbar-right">
+            <li><router-link to="/add">Add Customer</router-link></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
