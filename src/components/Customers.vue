@@ -1,6 +1,22 @@
 <template>
-  <div class="customers">
-    CUSTOMERS
+  <div class="customers container">
+    <h1 class="page-header">Manage Customers</h1>
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr v-for="customer in customers">
+        <td>{{customer.first_name}}</td>
+        <td>{{customer.last_name}}</td>
+        <td>{{customer.email}}</td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -9,9 +25,20 @@ export default {
   name: 'customers',
   data () {
     return {
-
+        customers: []
     }
-  }
+  },
+    methods: {
+      fetchCustomers(){
+          this.$http.get('http://rest.loc/customers').
+              then(function (response) {
+                this.customers = response.body;
+          })
+      }
+    },
+    created: function () {
+        this.fetchCustomers();
+    }
 }
 </script>
 
