@@ -9,7 +9,7 @@ import Customers from './components/Customers'
 import About from './components/About'
 import Add from './components/Add'
 import CustomerDetails from './components/CustomerDetails'
-
+import Edit from './components/Edit'
 
 Vue.use(vueResource);
 Vue.use(vueRouter);
@@ -22,6 +22,7 @@ const router = new vueRouter({
         {path: '/about', component: About},
         {path: '/add', component: Add},
         {path: '/customers/:id', component: CustomerDetails},
+        {path: '/edit/:id', component: Edit},
     ]
 })
 /* eslint-disable no-new */

@@ -1,8 +1,8 @@
 <template>
-    <div class="add container">
+    <div class="edit container">
         <Alert class="alert-danger" v-if="alert" v-bind:message="alert"></Alert>
-        <h1 class="page-header">Add Customer</h1>
-        <form v-on:submit.prevent="addCustomer">
+        <h1 class="page-header">Edit Customer</h1>
+        <form v-on:submit.prevent="updateCustomer">
             <div class="well">
                 <h4>Customer Info</h4>
                 <div class="form-group">
@@ -51,7 +51,7 @@
     export default {
         name: 'add',
         components: {
-          Alert
+            Alert
         },
         data () {
             return {
@@ -60,11 +60,16 @@
             }
         },
         methods: {
-            addCustomer(e){
+            fetchCustomer(id){
+                this.$http.get('http://rest.loc/customers/' + id).then(function (response) {
+                    this.customer = response.body;
+                });
+            },
+            updateCustomer(e){
                 if (!this.customer.first_name || !this.customer.last_name || !this.customer.email) {
                     this.alert = 'Please fill in all required fields';
                 } else {
-                    let newCustomer = {
+                    let updCustomer = {
                         first_name: this.customer.first_name,
                         last_name: this.customer.last_name,
                         phone: this.customer.phone,
@@ -73,11 +78,15 @@
                         city: this.customer.city,
                         state: this.customer.state
                     }
-                    this.$http.post('http://rest.loc/customers', newCustomer).then(function (response) {
-                        this.$router.push({path: '/', query: {alert: 'Customer Added!'}});
+                    this.$http.put('http://rest.loc/customers/'+ this.$route.params.id, updCustomer).
+                    then(function (response) {
+                        this.$router.push({path: '/', query: {alert: 'Customer Updated!'}});
                     });
                 }
             }
+        },
+        created:function () {
+            this.fetchCustomer(this.$route.params.id);
         }
     }
 </script>
