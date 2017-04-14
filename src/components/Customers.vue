@@ -15,6 +15,7 @@
                 <td>{{customer.first_name}}</td>
                 <td>{{customer.last_name}}</td>
                 <td>{{customer.email}}</td>
+                <td><router-link class="btn btn-default" v-bind:to="'/customers/'+customer.id">View</router-link></td>
             </tr>
             </tbody>
         </table>
