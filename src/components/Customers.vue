@@ -46,7 +46,7 @@
                 })
             },
             filterBy(list, value){
-                value = value.charAt(0).toUpperCase();
+                value = value.charAt(0).toUpperCase() + value.slice(1);
                 return list.filter(function (customer) {
                     return customer.last_name.indexOf(value) > -1;
                 });
