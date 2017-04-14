@@ -2,6 +2,7 @@
     <div class="customers container">
         <Alert v-if="alert" v-bind:message="alert"></Alert>
         <h1 class="page-header">Manage Customers</h1>
+        <input type="text" class="form-control" placeholder="Enter Last Name" v-model="filterInput"><br>
         <table class="table table-striped">
             <thead>
             <tr>
@@ -11,11 +12,13 @@
             </tr>
             </thead>
             <tbody>
-            <tr v-for="customer in customers">
+            <tr v-for="customer in filterBy(customers, filterInput)">
                 <td>{{customer.first_name}}</td>
                 <td>{{customer.last_name}}</td>
                 <td>{{customer.email}}</td>
-                <td><router-link class="btn btn-default" v-bind:to="'/customers/'+customer.id">View</router-link></td>
+                <td>
+                    <router-link class="btn btn-default" v-bind:to="'/customers/'+customer.id">View</router-link>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -27,12 +30,13 @@
     export default {
         name: 'customers',
         components: {
-          Alert
+            Alert
         },
         data () {
             return {
                 customers: [],
-                alert: ''
+                alert: '',
+                filterInput: ''
             }
         },
         methods: {
@@ -40,7 +44,13 @@
                 this.$http.get('http://rest.loc/customers').then(function (response) {
                     this.customers = response.body;
                 })
-            }
+            },
+            filterBy(list, value){
+                value = value.charAt(0).toUpperCase();
+                return list.filter(function (customer) {
+                    return customer.last_name.indexOf(value) > -1;
+                });
+            },
         },
         created: function () {
             if (this.$route.query.alert) {

@@ -1,6 +1,7 @@
 <template>
     <div class="about container">
        <h1 class="page-header">About</h1>
+        <p>This is a customer manager app built with Vue.js and Yii2</p>
        </div>
 </template>
 
